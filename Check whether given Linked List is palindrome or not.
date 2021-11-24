@@ -1,0 +1,65 @@
+#include <iostream>
+
+using namespace std;
+struct Node{
+    int x;
+    struct Node *next;
+};
+struct Node *cre(int xe)
+{
+    struct Node *h=new Node();
+    h->x=xe;
+    h->next=NULL;
+    return h;
+}
+int main()
+{
+    struct Node *t,*rem,*head,*curr,*prev,*nextno;
+    head = cre(1);
+    head->next=cre(2);
+    head->next->next=cre(3);
+    head->next->next->next=cre(4);
+    head->next->next->next->next=cre(5);
+    head->next->next->next->next->next=cre(4);
+    head->next->next->next->next->next->next=cre(3);
+    head->next->next->next->next->next->next->next=cre(2);
+    head->next->next->next->next->next->next->next->next=cre(1);
+    Node *slow=head,*fast=head;
+    while(fast&&fast->next)
+    {
+        rem=slow;
+        slow=slow->next;
+        fast=fast->next->next;
+    }
+    if(fast==NULL)
+    {
+        rem->next=NULL;
+    }
+    else
+    {
+        rem->next=NULL;
+        fast=slow->next;
+        slow=fast;
+    }
+    curr=slow;
+    nextno=slow;
+    prev=NULL;
+    while(nextno)
+    {
+        nextno=nextno->next;
+        curr->next=prev;
+        prev=curr;
+        curr=nextno;
+    }
+    slow=prev;
+    while(head!=NULL&&slow!=NULL&&head->x==slow->x)
+    {
+        head=head->next;
+        slow=slow->next;
+    }
+    if(head==NULL&&slow==NULL)
+    printf("YES");
+    else
+    printf("NO");
+    return 0;
+}
