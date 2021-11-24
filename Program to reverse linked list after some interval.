@@ -1,0 +1,69 @@
+#include <iostream>
+
+using namespace std;
+struct Node{
+    int x;
+    struct Node *next;
+};
+struct Node *cre(int xe)
+{
+    struct Node *h=new Node();
+    h->x=xe;
+    h->next=NULL;
+    return h;
+}
+int main()
+{
+    struct Node *t,*rem,*head,*curr,*prev,*nextno;
+    head = cre(1);
+    head->next=cre(2);
+    head->next->next=cre(3);
+    head->next->next->next=cre(4);
+    head->next->next->next->next=cre(5);
+    head->next->next->next->next->next=cre(6);
+    head->next->next->next->next->next->next=cre(7);
+    head->next->next->next->next->next->next->next=cre(8);
+    head->next->next->next->next->next->next->next->next=cre(9);
+    head->next->next->next->next->next->next->next->next->next=cre(10);
+    curr=head;
+    nextno=head;
+    prev=NULL;
+    rem=head->next;
+    int i=0;
+    int j=0;
+    while(rem)
+    {
+        curr=rem->next;
+        nextno=curr;
+        prev=NULL;
+        i=0;
+        j=0;
+        while(nextno&&i<3)
+        {
+            t=nextno;
+            nextno=nextno->next;
+            curr->next=prev;
+            prev=curr;
+            curr=nextno;
+            i++;
+        }
+        if(!nextno){
+        rem->next=t;
+        break;
+        }
+        rem->next=prev;
+        while(prev->next)
+        {
+            prev=prev->next;
+        }
+        prev->next=nextno;
+        rem=nextno;
+        rem=rem->next;
+    }
+    while(head)
+    {
+        printf("%d ",head->x);
+        head=head->next;
+    }
+    return 0;
+}
